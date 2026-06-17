@@ -13,7 +13,7 @@ const Login = () => {
     setIsLoading(true);
     const endpoint = isLogin ? '/api/auth/login' : '/api/auth/register';
     try {
-      const res = await axios.post(`http://localhost:5000${endpoint}`, { email, password });
+      const res = await axios.post(`https://test-project-ie0n.onrender.com${endpoint}`, { email, password });
       setMessage(res.data.message);
     } catch (err) {
       setMessage(err.response?.data?.message || 'Something went wrong');
