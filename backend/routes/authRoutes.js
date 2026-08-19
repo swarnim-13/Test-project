@@ -16,7 +16,7 @@ router.post('/register', async (req, res) => {
     }
     user = new User({ email, password });
     await user.save();
-    res.status(201).json({ message: 'Login Successful' });
+    res.status(201).json({ message: 'Account Secured' });
   } catch (err) {
     console.error('Registration failed:', err);
     res.status(500).json({ message: 'Registration failed. Please try again.' });
