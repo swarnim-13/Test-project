@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 
 const Login = () => {
+  const apiUrl = (import.meta.env.VITE_API_URL || 'https://test-project-ie0n.onrender.com').replace(/\/$/, '');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
@@ -13,10 +14,15 @@ const Login = () => {
     setIsLoading(true);
     const endpoint = isLogin ? '/api/auth/login' : '/api/auth/register';
     try {
-      const res = await axios.post(`https://test-project-ie0n.onrender.com${endpoint}`, { email, password });
+      const res = await axios.post(`${apiUrl}${endpoint}`, { email, password });
       setMessage(res.data.message);
     } catch (err) {
-      setMessage(err.response?.data?.message || 'Something went wrong');
+      setMessage(
+        err.response?.data?.message ||
+        (typeof err.response?.data === 'string' ? err.response.data : '') ||
+        (err.request ? 'The server could not be reached.' : err.message) ||
+        'Something went wrong'
+      );
     } finally {
       setIsLoading(false);
     }
@@ -115,7 +121,7 @@ const Login = () => {
               <button
                 onClick={() => {
                   setIsLogin(!isLogin);
-                  setMessage('');
+                  setMessage('oyeeee');
                 }}
                 className="text-sm font-semibold text-slate-500 hover:text-indigo-600 transition-all duration-300 group"
               >

@@ -5,6 +5,10 @@ const User = require('../models/User');
 // Register
 router.post('/register', async (req, res) => {
   const { email, password } = req.body;
+  if (!email || !password) {
+    return res.status(400).json({ message: 'Email and password are required' });
+  }
+
   try {
     let user = await User.findOne({ email });
     if (user) {
@@ -12,15 +16,20 @@ router.post('/register', async (req, res) => {
     }
     user = new User({ email, password });
     await user.save();
-    res.json({ message: 'Login Successful' }); // Requirements say show "Login Successful" after registration too
+    res.status(201).json({ message: 'Login Successful' });
   } catch (err) {
-    res.status(500).send('Server Error');
+    console.error('Registration failed:', err);
+    res.status(500).json({ message: 'Registration failed. Please try again.' });
   }
 });
 
 // Login
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
+  if (!email || !password) {
+    return res.status(400).json({ message: 'Email and password are required' });
+  }
+
   try {
     const user = await User.findOne({ email });
     if (!user || user.password !== password) {
@@ -28,7 +37,8 @@ router.post('/login', async (req, res) => {
     }
     res.json({ message: 'Login Successful' });
   } catch (err) {
-    res.status(500).send('Server Error');
+    console.error('Login failed:', err);
+    res.status(500).json({ message: 'Login failed. Please try again.' });
   }
 });
 
