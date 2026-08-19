@@ -57,7 +57,7 @@ const Login = () => {
             {isLogin ? "Welcome Back" : "🛡️ Check Your Account Safety"}
           </h1>
           <p className="text-slate-600 font-medium px-4">
-            {isLogin ? "Securely sign in to your dashboard." : "Join a secure and trusted community."}
+            {isLogin ? "Securely  to your dashboard." : "Join a secure and trusted community."}
           </p>
         </div>
 
